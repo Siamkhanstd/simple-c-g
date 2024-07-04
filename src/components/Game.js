@@ -1,4 +1,3 @@
-// pages/Game.js
 import { useEffect, useState } from "react";
 
 export default function Game() {
@@ -31,8 +30,9 @@ export default function Game() {
   const startTimer = () => {
     const timer = setTimeout(() => {
       setCarSpeed(1);
-      document.getElementById("road").style.animation = "roadanimation 20s linear infinite";
-      document.getElementById("mycar").classList.remove("carInSpeedClass");
+      document.getElementById("road").style.animation =
+        "roadanimation 1s linear infinite";
+      document.getElementById("mycarimg").classList.remove("carInSpeedClass");
     }, 5000);
     setSpeedTimer(timer);
   };
@@ -43,15 +43,17 @@ export default function Game() {
 
   const speedUpTheCar = () => {
     setCarSpeed(4);
-    document.getElementById("mycar").classList.add("carInSpeedClass");
-    document.getElementById("road").style.animation = "roadanimation 4s linear infinite";
+    document.getElementById("mycarimg").classList.add("carInSpeedClass");
+    document.getElementById("road").style.animation =
+      "roadanimation 0.4s linear infinite";
   };
 
   const startGame = () => {
     setIsStarted(true);
     document.getElementById("mycar").classList.remove("mouseBlocked");
     document.getElementById("start").style.display = "none";
-    document.getElementById("road").style.animation = "roadanimation 20s linear infinite";
+    document.getElementById("road").style.animation =
+      "roadanimation 1s linear infinite";
 
     let t = 67; // Adjusted top position to ensure the car is fully visible
     let l = 50; // Updated left position to keep the car at the center
@@ -74,7 +76,13 @@ export default function Game() {
       </button>
 
       <div className="mouseBlocked" id="mycar">
-        <img onDoubleClick={handleClickOnCar} id="mycarimg" className="mycarimg" src="car1.png" alt="my car" />
+        <img
+          onDoubleClick={handleClickOnCar}
+          id="mycarimg"
+          className="mycarimg"
+          src="car1.png"
+          alt="my car"
+        />
       </div>
       <div id="road"></div>
 
@@ -82,6 +90,7 @@ export default function Game() {
         * {
           margin: 0;
           padding: 0;
+          scroll-behavior: smooth;
         }
         body {
           font-family: sans-serif;
@@ -93,14 +102,16 @@ export default function Game() {
           overflow-y: hidden;
         }
         #road {
-          background: url(road6.png);
+          z-index: -1;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: url(road6.png) repeat;
           background-position-x: center;
-          height: 1200vh;
           width: 100vw;
-          position: relative;
-          top: -80vh;
-          z-index: -9;
+          height: 100vh;
         }
+
         #start {
           position: absolute;
           z-index: 100;
@@ -128,31 +139,38 @@ export default function Game() {
           padding: 10px;
         }
         #mycar {
-          width: 100px;
+          width: 100p;
           height: 100px;
           position: absolute;
-          top: 67vh; // Adjusted position to ensure the car is fully visible
-          left: 50vw; // Position the car at the bottom center
-          transform: translateX(-50%);
+          top: 67vh;
+          left: 50vw;
+          -webkit-transform: translatex(-50%);
+          -moz-transform: translatex(-50%);
+          -ms-transform: translatex(-50%);
+          -o-transform: translatex(-50%);
+          transform: translatex(-50%);
+          text-align: -webkit-center;
+          text-align: center;
         }
         .mycarimg {
           width: 90px;
         }
         @keyframes roadanimation {
           0% {
-            top: -1100vh;
+            background-position-y: 0;
           }
           100% {
-            top: -200vh;
+            background-position-y: 400px;
           }
         }
+
         @keyframes carInSpeed {
           0%,
           100% {
-            transform: scale(0.9);
+            transform: scale(0.96);
           }
           50% {
-            transform: scale(1.1);
+            transform: scale(1.04);
           }
         }
         .carInSpeedClass {
